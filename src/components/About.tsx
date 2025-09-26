@@ -19,7 +19,7 @@ const About = () => {
           </svg>
         </div>
         <p className="font-abz pt-8 sm:text-justify md:text-lg">
-          Based in Indonesia, I'm a web developer with a unique background in
+          Based in Indonesia, I&apos;m a web developer with a unique background in
           Informatics & Computer Engineering Education (B.Ed.). This has given
           me a distinct advantage in breaking down complex technical concepts
           and building user-friendly web experiences.
@@ -47,7 +47,7 @@ const About = () => {
           <div className="space-y-4 pt-8 font-abz font-bold text-sm md:text-base xl:text-lg">
             <div>
               <p className="font-normal mb-4">
-                Here are the main tools I use. I'm a fast learner and always
+                Here are the main tools I use. I&apos;m a fast learner and always
                 open to picking up new tech for the right project.
               </p>
               <h4 className="font-semibold mb-2">Languages</h4>
