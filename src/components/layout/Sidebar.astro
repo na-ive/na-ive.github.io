@@ -10,16 +10,13 @@ const navItems = [
 ];
 ---
 
-<!-- Compact Sidebar M3 Style - Hidden on Mobile, Visible on Desktop -->
 <aside class="hidden lg:flex fixed left-0 top-0 h-screen w-20 bg-transparent z-40 flex-col items-center py-4">
-  <!-- Logo/Brand -->
   <div class="mb-8">
     <div class="w-12 h-12 rounded-2xl bg-[var(--md-sys-color-primary-container)] flex items-center justify-center">
       <span class="text-xl">NA</span>
     </div>
   </div>
 
-  <!-- Navigation Icons -->
   <nav class="flex-1 flex flex-col items-center gap-3 w-full px-2">
     {navItems.map((item) => (
       <a
@@ -38,7 +35,6 @@ const navItems = [
     ))}
   </nav>
 
-  <!-- Theme Toggle at Bottom -->
   <div class="mt-auto">
     <ThemeToggle class="border-1" />
   </div>
@@ -60,40 +56,3 @@ const navItems = [
     border-right-color: var(--md-sys-color-inverse-surface);
   }
 </style>
-
-<script>
-  // Active state untuk nav items
-  const navItems = document.querySelectorAll('.nav-item');
-  const sections = document.querySelectorAll('section[id]');
-
-  // Intersection Observer untuk auto-highlight
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        navItems.forEach(item => {
-          item.classList.remove('active');
-          if (item.getAttribute('href') === `#${id}`) {
-            item.classList.add('active');
-          }
-        });
-      }
-    });
-  }, {
-    threshold: 0.5
-  });
-
-  sections.forEach(section => observer.observe(section));
-
-  // Smooth scroll
-  navItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = item.getAttribute('href');
-      if (targetId) {
-        const target = document.querySelector(targetId);
-        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-</script>

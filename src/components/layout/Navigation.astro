@@ -3,12 +3,10 @@ import Sidebar from './Sidebar.astro';
 import Navbar from './Navbar.astro';
 ---
 
-<!-- Desktop: Sidebar (hidden on mobile) -->
 <div class="hidden lg:block">
   <Sidebar />
 </div>
 
-<!-- Mobile: Navbar (hidden on desktop) -->
 <div class="lg:hidden">
   <Navbar />
 </div>

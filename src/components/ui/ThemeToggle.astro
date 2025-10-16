@@ -9,7 +9,7 @@ const { class: buttonClass, classSvg: svgClass } = Astro.props;
   aria-label="Toggle theme"
   type="button"
 >
-  <!-- Sun Icon (visible in dark mode) -->
+  <!-- Sun Icon -->
   <svg
     class:list={["theme-dark-icon absolute w-6 h-6 transition-all duration-300 opacity-0 rotate-90 scale-75",
     svgClass,
@@ -20,7 +20,7 @@ const { class: buttonClass, classSvg: svgClass } = Astro.props;
     <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
   </svg>
 
-  <!-- Moon Icon (visible in light mode) -->
+  <!-- Moon Icon -->
   <svg
     class="theme-light-icon absolute w-6 h-6 transition-all duration-300 opacity-0 -rotate-90 scale-75"
     fill="currentColor"
@@ -50,7 +50,6 @@ const { class: buttonClass, classSvg: svgClass } = Astro.props;
     transform: scale(0.95);
   }
 
-  /* Icon show state */
   .theme-dark-icon.show {
     opacity: 1;
     transform: rotate(0deg) scale(1);
@@ -93,11 +92,10 @@ const { class: buttonClass, classSvg: svgClass } = Astro.props;
 
     btn.addEventListener('click', toggleTheme);
 
-    // Observe perubahan class di <html>
     const observer = new MutationObserver(updateIcons);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-    updateIcons(); // initial
+    updateIcons();
   }
 
   function initAllThemeToggles() {

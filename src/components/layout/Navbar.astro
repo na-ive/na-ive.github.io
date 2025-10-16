@@ -11,31 +11,25 @@ const navItems = [
 ];
 ---
 
-<!-- Top Navbar -->
 <nav class="lg:hidden fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-opacity-95">
   <div class="px-4 py-4">
     <div class="flex items-center justify-between">
-      <!-- Logo -->
       <div class="w-10 h-10 rounded-xl bg-[var(--md-sys-color-primary-container)] flex items-center justify-center">
         <span class="text-lg font-bold">NA</span>
       </div>
 
-      <!-- Right Side: Theme Toggle + Hamburger -->
       <div class="flex gap-2 items-center">
         <ThemeToggle classSvg="w-8 h-8" />
 
-        <!-- Hamburger/Close Button -->
         <button
           id="mobile-menu-button"
           class="w-12 h-12 rounded-xl flex items-center justify-center text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-secondary-container)] transition-colors relative"
           aria-label="Toggle menu"
         >
-          <!-- Hamburger Icon -->
           <svg id="hamburger-icon" class="w-6 h-6 absolute transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
 
-          <!-- Close Icon (X) -->
           <svg id="close-icon" class="w-6 h-6 absolute opacity-0 rotate-90 scale-50 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
@@ -45,22 +39,18 @@ const navItems = [
   </div>
 </nav>
 
-<!-- Spacer untuk fixed navbar -->
 <div class="lg:hidden h-20"></div>
 
-<!-- Mobile Sidebar Overlay -->
 <div
   id="sidebar-overlay"
   class="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 opacity-0 invisible transition-all duration-300"
 ></div>
 
-<!-- Mobile Sliding Sidebar -->
 <aside
   id="mobile-sidebar"
   class="lg:hidden fixed left-0 top-0 h-screen w-64 bg-[var(--md-sys-color-surface-container)] z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl rounded-r-2xl"
 >
   <div class="flex flex-col h-full">
-    <!-- Sidebar Header -->
     <div class="">
       <div class="flex items-center gap-3 p-6">
         <div class="w-12 h-12 rounded-2xl bg-[var(--md-sys-color-primary-container)] flex items-center justify-center">
@@ -75,7 +65,6 @@ const navItems = [
 
     <WavySeparator class="text-[var(--md-sys-color-outline-variant)]" />
 
-    <!-- Navigation Links -->
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
       {navItems.map((item) => (
         <a
@@ -88,7 +77,6 @@ const navItems = [
       ))}
     </nav>
 
-    <!-- Sidebar Footer -->
     <div class="">
       <WavySeparator class="text-[var(--md-sys-color-outline-variant)]" />
       <p class="text-sm text-[var(--md-sys-color-on-surface-variant)] text-center p-6 mt-4">
@@ -99,13 +87,11 @@ const navItems = [
 </aside>
 
 <style>
-  /* Active state */
   .mobile-nav-link.active {
     background-color: var(--md-sys-color-secondary-container);
     color: var(--md-sys-color-on-secondary-container);
   }
 
-  /* Prevent scroll when sidebar open */
   body.sidebar-open {
     overflow: hidden;
   }
@@ -125,33 +111,26 @@ const navItems = [
     isOpen = !isOpen;
 
     if (isOpen) {
-      // Open sidebar
       mobileSidebar?.classList.remove('-translate-x-full');
       sidebarOverlay?.classList.remove('opacity-0', 'invisible');
       document.body.classList.add('sidebar-open');
 
-      // Animate icons
       hamburgerIcon?.classList.add('opacity-0', '-rotate-90', 'scale-50');
       closeIcon?.classList.remove('opacity-0', 'rotate-90', 'scale-50');
     } else {
-      // Close sidebar
       mobileSidebar?.classList.add('-translate-x-full');
       sidebarOverlay?.classList.add('opacity-0', 'invisible');
       document.body.classList.remove('sidebar-open');
 
-      // Animate icons
       hamburgerIcon?.classList.remove('opacity-0', '-rotate-90', 'scale-50');
       closeIcon?.classList.add('opacity-0', 'rotate-90', 'scale-50');
     }
   }
 
-  // Toggle on button click
   menuButton?.addEventListener('click', toggleSidebar);
 
-  // Close on overlay click
   sidebarOverlay?.addEventListener('click', toggleSidebar);
 
-  // Close on nav link click
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
       if (isOpen) {
@@ -160,7 +139,6 @@ const navItems = [
     });
   });
 
-  // Active state based on scroll
   const sections = document.querySelectorAll('section[id]');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -180,7 +158,6 @@ const navItems = [
 
   sections.forEach(section => observer.observe(section));
 
-  // Close on ESC key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && isOpen) {
       toggleSidebar();

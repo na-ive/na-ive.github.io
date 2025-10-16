@@ -37,7 +37,7 @@ const { title = 'Naufal Ammar' } = Astro.props;
     <Navigation />
     <main class="flex-1 min-w-0">
       <div class="lg:pl-20 p-4 pt-20 lg:pt-4 h-full">
-        <div class="!bg-[var(--md-sys-color-background)] rounded-4xl h-full overflow-y-auto scrollbar-hidden">
+        <div class="!bg-[var(--md-sys-color-background)] rounded-4xl h-full overflow-y-auto scrollbar-hidden scroll-container">
           <HeroSection />
           <div class="px-4 lg:px-8">
             <div class="max-w-7xl mx-auto">
@@ -50,9 +50,7 @@ const { title = 'Naufal Ammar' } = Astro.props;
     </main>
   </div>
 
-  <!-- Theme Management Script -->
   <script>
-    // Initialize theme
     function initTheme() {
       const html = document.documentElement;
       const savedTheme = localStorage.getItem('theme');
@@ -63,10 +61,8 @@ const { title = 'Naufal Ammar' } = Astro.props;
       html.classList.add(theme);
     }
 
-    // Run on page load
     initTheme();
 
-    // Listen for system theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       if (!localStorage.getItem('theme')) {
         const newTheme = e.matches ? 'dark' : 'light';
@@ -75,5 +71,117 @@ const { title = 'Naufal Ammar' } = Astro.props;
       }
     });
   </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const scrollContainer = document.querySelector<HTMLElement>(".scroll-container");
+    if (!scrollContainer) {
+      console.warn("Scroll container not found!");
+      return;
+    }
+
+    const navItems = Array.from(document.querySelectorAll<HTMLAnchorElement>(".nav-item"));
+    const sections = Array.from(scrollContainer.querySelectorAll<HTMLElement>("section[id]"));
+
+    function setActiveById(id: string): void {
+      navItems.forEach((item) => {
+        const href = item.getAttribute("href");
+        item.classList.toggle("active", href === `#${id}`);
+      });
+    }
+
+    let isClickScrolling = false;
+    let currentActiveId: string | null = null;
+    let observerTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    const debounceSetActive = (id: string) => {
+      if (observerTimeout) clearTimeout(observerTimeout);
+      observerTimeout = setTimeout(() => {
+        if (!isClickScrolling && id !== currentActiveId) {
+          currentActiveId = id;
+          setActiveById(id);
+        }
+      }, 100);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries.filter((e) => e.isIntersecting);
+        if (visibleEntries.length === 0) return;
+
+        const visible = visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        const target = visible.target as HTMLElement;
+        const id = target.id;
+        debounceSetActive(id);
+      },
+      {
+        root: scrollContainer,
+        threshold: Array.from({ length: 11 }, (_, i) => i / 10),
+        rootMargin: "-25% 0px -45% 0px",
+      }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+
+    navItems.forEach((item) => {
+      item.addEventListener("click", (e: MouseEvent) => {
+        e.preventDefault();
+
+        const targetId = item.getAttribute("href");
+        if (!targetId) return;
+        const target = scrollContainer.querySelector<HTMLElement>(targetId);
+        if (!target) return;
+
+        isClickScrolling = true;
+        currentActiveId = targetId.replace("#", "");
+        setActiveById(currentActiveId);
+
+        scrollContainer.scrollTo({
+          top: target.offsetTop,
+          behavior: "smooth",
+        });
+
+        setTimeout(() => {
+          isClickScrolling = false;
+        }, 900);
+      });
+    });
+
+    const firstId = sections[0]?.id;
+    if (firstId) {
+      setActiveById(firstId);
+      currentActiveId = firstId;
+    }
+
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+    scrollContainer.addEventListener("scroll", () => {
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        if (isClickScrolling) return;
+
+        const middle = scrollContainer.scrollTop + scrollContainer.clientHeight / 2;
+        let nearest: HTMLElement | undefined;
+        let nearestDist = Infinity;
+
+        for (const sec of sections) {
+          const offset = Math.abs(sec.offsetTop + sec.clientHeight / 2 - middle);
+          if (offset < nearestDist) {
+            nearestDist = offset;
+            nearest = sec;
+          }
+        }
+
+        if (nearest && typeof nearest.id === "string") {
+          setActiveById(nearest.id);
+        }
+      }, 200);
+    });
+  });
+</script>
+
+
+
+
+
 </body>
 </html>
