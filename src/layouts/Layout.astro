@@ -136,8 +136,9 @@ const { title = 'Naufal Ammar' } = Astro.props;
         currentActiveId = targetId.replace("#", "");
         setActiveById(currentActiveId);
 
+        const offsetFix = 16;
         scrollContainer.scrollTo({
-          top: target.offsetTop,
+          top: target.offsetTop - offsetFix,
           behavior: "smooth",
         });
 
