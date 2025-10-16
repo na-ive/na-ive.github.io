@@ -1,0 +1,17 @@
+---
+
+---
+
+<section id="skills" class="pt-20">
+  <h2 class="mx-4 text-4xl lg:text-5xl font-semibold text-[var(--md-sys-color-on-surface)] mb-8">
+    Skills & Technologies
+  </h2>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {['JavaScript', 'Python', 'PHP', 'React', 'Node.js', 'Next.js', 'Laravel', 'Tailwind', 'Git', 'VS Code', 'PostgreSQL', 'MySQL'].map(skill => (
+      <div class="bg-[var(--md-sys-color-surface-container-high)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)] rounded-[20px] p-6 text-center transition-colors duration-300">
+        <p class="font-semibold text-lg">{skill}</p>
+      </div>
+    ))}
+  </div>
+</section>

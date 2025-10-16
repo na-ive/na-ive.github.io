@@ -1,0 +1,25 @@
+---
+const { imgSrc,
+        bgColor = 'var(--md-sys-color-surface-container-high)',
+        loading = 'lazy',
+        class: className } = Astro.props;
+---
+
+<div class:list={[
+  `relative overflow-hidden min-h-72 md:min-h-[32rem] rounded-3xl bg-[${bgColor}] flex items-center`,
+  className
+]}>
+
+  {imgSrc && (
+    <img
+      src={imgSrc}
+      alt="Card background illustration"
+      class="absolute inset-0 h-full w-full object-cover z-0"
+      loading={loading}
+    />
+  )}
+
+  <div class="relative z-10 w-full">
+    <slot />
+  </div>
+</div>

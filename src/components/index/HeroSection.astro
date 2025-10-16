@@ -1,0 +1,44 @@
+---
+import HeroCard from "../ui/Card.astro"
+import RightContentImage from "../../assets/stacked-step.svg"
+---
+<script>
+  import '@material/web/button/filled-button.js';
+  import '@material/web/button/outlined-button.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const anchorLinks = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
+
+    anchorLinks.forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const targetId = anchor.getAttribute('href');
+        if (!targetId) return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  });
+</script>
+
+ <section id="home" class="grid grid-cols-1 lg:grid-cols-2 gap-2 justify-center px-2 pt-2">
+  <HeroCard>
+    <div class="p-12">
+      <h1 class="text-4xl md:text-6xl lg:text-8xl font-medium mb-6">Naufal Ammar</h1>
+      <p class="text-xl md:text-2xl mb-6">Web developer and game developer at heart.</p>
+      <div class="flex gap-4">
+        <a href="#projects"><md-filled-button class="md:text-2xl md:py-4 md:px-6 xl:py-6 xl:px-8">Explore project</md-filled-button></a>
+        <a href="#contact"><md-outlined-button class="md:text-2xl md:py-4 md:px-6 xl:py-6 xl:px-8">Contact Me</md-outlined-button></a>
+      </div>
+    </div>
+  </HeroCard>
+
+  <HeroCard imgSrc={RightContentImage.src} loading="eager" />
+</section>

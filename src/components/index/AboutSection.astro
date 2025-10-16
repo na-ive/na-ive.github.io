@@ -1,0 +1,80 @@
+---
+
+---
+
+<section id="about" class="pt-20">
+  <div class="space-y-8">
+    <h2 class="mx-4 text-4xl lg:text-5xl font-semibold text-[var(--md-sys-color-on-surface)] mb-4">
+      About Me
+    </h2>
+
+    <p class="mx-4 mb-20 md:text-xl lg:text-2xl max-w-4xl text-justify">
+      Based in Indonesia, I'm a web developer with a unique background in Informatics & Computer Engineering Education (B.Ed.).
+      This has given me a distinct advantage in breaking down complex technical concepts and building user-friendly web experiences.
+    </p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Bio Card - No shadow, hover color change -->
+      <div class="bg-[var(--md-sys-color-primary-container)] hover:bg-[var(--md-sys-color-primary-container)]/90 rounded-[28px] p-8 transition-colors duration-300">
+        <h3 class="text-2xl font-bold text-[var(--md-sys-color-on-primary-container)] mb-4">
+          Now
+        </h3>
+        <p class="text-[var(--md-sys-color-on-primary-container)] leading-relaxed">
+          Building modern web apps and exploring creative tech through side projects.
+        </p>
+      </div>
+
+      <!-- Experience Card -->
+      <div class="bg-[var(--md-sys-color-secondary-container)] hover:bg-[var(--md-sys-color-secondary-container)]/90 rounded-[28px] p-8 transition-colors duration-300">
+        <h3 class="text-2xl font-bold text-[var(--md-sys-color-on-secondary-container)] mb-4">
+          Focus
+        </h3>
+        <p class="text-[var(--md-sys-color-on-secondary-container)] leading-relaxed">
+          Clean design, smooth UX, and learning new tools that make ideas come alive.
+        </p>
+      </div>
+
+      <!-- Education Card -->
+      <div class="bg-[var(--md-sys-color-tertiary-container)] hover:bg-[var(--md-sys-color-tertiary-container)]/90 rounded-[28px] p-8 transition-colors duration-300">
+        <h3 class="text-2xl font-bold text-[var(--md-sys-color-on-tertiary-container)] mb-4">
+          Mission
+        </h3>
+        <p class="text-[var(--md-sys-color-on-tertiary-container)] leading-relaxed">
+          Keep improving, ship more meaningful stuff, and mix web, game, and AI into something fun.
+        </p>
+      </div>
+
+      <!-- Passion Card -->
+      <div class="bg-[var(--md-sys-color-surface-container-high)] hover:bg-[var(--md-sys-color-surface-container-highest)] rounded-[28px] p-8 transition-colors duration-300">
+        <h3 class="text-2xl font-bold text-[var(--md-sys-color-on-surface)] mb-4">
+          Location
+        </h3>
+        <p id="time" class="text-[var(--md-sys-color-on-surface)] leading-relaxed">
+          Indonesia (GMT+7 · loading...) · open to remote work and collabs.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function getUTC7Time() {
+    return new Date().toLocaleTimeString("en-US", {
+      timeZone: "Asia/Jakarta",
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  const timeEl = document.getElementById("time")!;
+
+  function updateTime() {
+    const currentTime = getUTC7Time();
+    timeEl.textContent = `Indonesia (GMT+7 · ${currentTime}) · open to remote work and collabs.`;
+  }
+
+  updateTime();
+  setInterval(updateTime, 60000);
+</script>
+

@@ -1,0 +1,119 @@
+---
+import { Image } from 'astro:assets';
+import Project1 from "../../assets/aurery.png"
+import Project2 from "../../assets/port.png"
+import Project3 from "../../assets/todo.png"
+---
+
+<section id="projects" class="pt-20">
+  <h2 class="mx-4 text-4xl lg:text-5xl font-semibold text-[var(--md-sys-color-on-surface)] mb-8">
+    Featured Projects
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Project Card 1 - M3 Style -->
+    <a
+      href="https://github.com/na-ive/Aurery"
+      class="group bg-[var(--md-sys-color-surface-container)] hover:bg-[var(--md-sys-color-secondary-container)] rounded-[28px] overflow-hidden transition-all duration-300"
+    >
+      <div class=`relative overflow-hidden h-48 flex items-center justify-center text-white text-6xl rounded-[28px]`>
+        <Image
+          src={Project1}
+          alt="Aurery"
+          class="absolute inset-0 h-full w-full object-cover z-0"
+          width="500"
+          height="500"
+        />
+      </div>
+      <div class="p-6">
+        <h3 class="text-2xl font-bold text-[var(--md-sys-color-on-surface)] mb-2">
+          Aurery
+        </h3>
+        <p class="text-[var(--md-sys-color-on-surface-variant)] mb-4">
+          Interactive augmented reality experience designed to teach 3D geometric concepts through visualization and hands-on exploration.
+        </p>
+        <div class="flex gap-2 flex-wrap">
+          <span class="px-3 py-1 bg-[var(--md-sys-color-tertiary-container)] text-[var(--md-sys-color-on-primary-container)] rounded-full text-sm font-medium">
+            Unity
+          </span>
+          <span class="px-3 py-1 bg-[var(--md-sys-color-tertiary-container)] text-[var(--md-sys-color-on-secondary-container)] rounded-full text-sm font-medium">
+            Vuforia
+          </span>
+          <span class="px-3 py-1 bg-[var(--md-sys-color-tertiary-container)] text-[var(--md-sys-color-on-tertiary-container)] rounded-full text-sm font-medium">
+            C#
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project Card 2 -->
+    <a
+      href="https://github.com/na-ive/githubpage-v1/"
+      class="group bg-[var(--md-sys-color-surface-container)] hover:bg-[var(--md-sys-color-secondary-container)] rounded-[28px] overflow-hidden transition-all duration-300"
+    >
+      <div class=`relative overflow-hidden h-48 flex items-center justify-center text-white text-6xl rounded-[28px]`>
+        <Image
+          src={Project2}
+          alt="Port"
+          class="absolute inset-0 h-full w-full object-cover z-0"
+          width="500"
+          height="500"
+        />
+      </div>
+      <div class="p-6">
+        <h3 class="text-2xl font-bold text-[var(--md-sys-color-on-surface)] mb-2">
+          Portfolio Page v1
+        </h3>
+        <p class="text-[var(--md-sys-color-on-surface-variant)] mb-4">
+          Responsive portfolio page showcasing interactive UI components built with React, Tailwind, and Motion.
+        </p>
+        <div class="flex gap-2 flex-wrap">
+          <span class="px-3 py-1 bg-[var(--md-sys-color-tertiary-container)] text-[var(--md-sys-color-on-primary-container)] rounded-full text-sm font-medium">
+            React
+          </span>
+          <span class="px-3 py-1 bg-[var(--md-sys-color-tertiary-container)] text-[var(--md-sys-color-on-secondary-container)] rounded-full text-sm font-medium">
+            Tailwind
+          </span>
+          <span class="px-3 py-1 bg-[var(--md-sys-color-tertiary-container)] text-[var(--md-sys-color-on-tertiary-container)] rounded-full text-sm font-medium">
+            Motion
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project Card 3 -->
+    <a
+      href="https://github.com/na-ive/todo-nextjs"
+      class="group bg-[var(--md-sys-color-surface-container)] hover:bg-[var(--md-sys-color-secondary-container)] rounded-[28px] overflow-hidden transition-all duration-300"
+    >
+      <div class=`relative overflow-hidden h-48 flex items-center justify-center text-white text-6xl rounded-[28px]`>
+        <Image
+          src={Project3}
+          alt="Todo"
+          class="absolute inset-0 h-full w-full object-cover z-0"
+          width="500"
+          height="500"
+        />
+      </div>
+      <div class="p-6">
+        <h3 class="text-2xl font-bold text-[var(--md-sys-color-on-surface)] mb-2">
+          Simple Todo App
+        </h3>
+        <p class="text-[var(--md-sys-color-on-surface-variant)] mb-4">
+          Simple Todo App built with Next.js as the frontend and Supabase as the backend database.
+        </p>
+        <div class="flex gap-2 flex-wrap">
+          <span class="px-3 py-1 bg-[var(--md-sys-color-tertiary-container)] text-[var(--md-sys-color-on-primary-container)] rounded-full text-sm font-medium">
+            Next.js
+          </span>
+          <span class="px-3 py-1 bg-[var(--md-sys-color-tertiary-container)] text-[var(--md-sys-color-on-secondary-container)] rounded-full text-sm font-medium">
+            Supabase
+          </span>
+          <span class="px-3 py-1 bg-[var(--md-sys-color-tertiary-container)] text-[var(--md-sys-color-on-tertiary-container)] rounded-full text-sm font-medium">
+            Tailwind
+          </span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>

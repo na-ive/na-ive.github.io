@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/layout/Navigation.astro';
+import HeroSection from '../components/index/HeroSection.astro';
+import Footer from '../components/layout/Footer.astro';
+
+export interface Props {
+  title?: string;
+}
+
+const { title = 'Naufal Ammar' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <script is:inline>
+    (function() {
+      const theme = localStorage.getItem('theme') ||
+                   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.classList.add(theme);
+    })();
+  </script>
+</head>
+<body class="!bg-[var(--md-sys-color-surface-container)]">
+  <div class="h-screen flex">
+    <Navigation />
+    <main class="flex-1 min-w-0">
+      <div class="lg:pl-20 p-4 pt-20 lg:pt-4 h-full">
+        <div class="!bg-[var(--md-sys-color-background)] rounded-4xl h-full overflow-y-auto scrollbar-hidden">
+          <HeroSection />
+          <div class="px-4 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+              <slot />
+            </div>
+          </div>
+          <Footer />
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Theme Management Script -->
+  <script>
+    // Initialize theme
+    function initTheme() {
+      const html = document.documentElement;
+      const savedTheme = localStorage.getItem('theme');
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const theme = savedTheme || systemTheme;
+
+      html.classList.remove('light', 'dark');
+      html.classList.add(theme);
+    }
+
+    // Run on page load
+    initTheme();
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        const newTheme = e.matches ? 'dark' : 'light';
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(newTheme);
+      }
+    });
+  </script>
+</body>
+</html>
