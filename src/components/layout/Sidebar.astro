@@ -17,20 +17,26 @@ const navItems = [
     </div>
   </div>
 
-  <nav class="flex-1 flex flex-col items-center gap-3 w-full px-2">
+  <nav class="flex-1 flex flex-col items-center gap-6 w-full px-2">
     {navItems.map((item) => (
       <a
         href={item.href}
         aria-label={item.name}
-        class="nav-item w-14 h-14 rounded-2xl flex items-center justify-center text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-secondary-container)] hover:text-[var(--md-sys-color-on-secondary-container)] transition-all duration-300 group relative"
-        data-tooltip={item.name}
+        class="nav-link group"
       >
-       <span set:html={item.icon} class="block h-6 w-6" />
+        <button
+          aria-label={item.name}
+          class="nav-item w-14 h-8 rounded-full flex items-center justify-center text-[var(--md-sys-color-on-surface-variant)] group-hover:bg-[var(--md-sys-color-secondary-container)] group-hover:text-[var(--md-sys-color-on-secondary-container)] transition-all duration-300 relative cursor-pointer"
+          data-tooltip={item.name}
+        >
+         <span set:html={item.icon} class="block h-6 w-6" />
 
-        <!-- Tooltip -->
-        <div class="tooltip absolute left-full ml-2 px-3 py-2 bg-[var(--md-sys-color-inverse-surface)] text-[var(--md-sys-color-inverse-on-surface)] rounded-xl text-sm font-medium whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none">
-          {item.name}
-        </div>
+          <!-- Tooltip -->
+          {/* <div class="tooltip absolute left-full ml-2 px-3 py-2 bg-[var(--md-sys-color-inverse-surface)] text-[var(--md-sys-color-inverse-on-surface)] rounded-xl text-sm font-medium whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none">
+            {item.name}
+          </div> */}
+        </button>
+        <p class="text-xs text-center mt-1 group-hover:text-[var(--md-sys-color-on-secondary-container)]">{item.name}</p>
       </a>
     ))}
   </nav>
@@ -43,6 +49,10 @@ const navItems = [
 <style>
   .nav-item.active {
     background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+  }
+
+  .nav-link.active {
     color: var(--md-sys-color-on-secondary-container);
   }
 
