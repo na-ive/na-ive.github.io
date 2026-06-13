@@ -75,11 +75,11 @@ export function Intro() {
       className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#F4F4F5]"
       style={{ visibility: "hidden" }}
     >
-      <h1 className="flex flex-wrap justify-center gap-x-1 md:gap-x-3 leading-none px-6" style={{ perspective: "800px" }}>
+      <h1 className="flex justify-center gap-x-0 md:gap-x-3 leading-none px-6 whitespace-nowrap" style={{ perspective: "800px" }}>
         {name.split("").map((char, i) => (
           <span
             key={i}
-            className={`intro-char inline-block text-[16vw] md:text-[10vw] lg:text-[10rem] font-black tracking-tighter text-zinc-900 uppercase ${char === " " ? "w-[0.35em]" : ""}`}
+            className={`intro-char inline-block text-[11vw] md:text-[10vw] lg:text-[10rem] font-black tracking-tighter text-zinc-900 uppercase ${char === " " ? "w-[0.35em]" : ""}`}
           >
             {char === " " ? "\u00A0" : char}
           </span>
