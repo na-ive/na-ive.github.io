@@ -1,14 +1,89 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import AboutSection from '../components/index/AboutSection.astro';
-import ProjectSection from '../components/index/ProjectSection.astro';
-import SkillSection from '../components/index/SkillSection.astro';
-import ContactSection from '../components/index/ContactSection.astro';
+import { Hero } from '../components/sections/Hero';
+import { ZAxisCascade } from '../components/sections/ZAxisCascade';
+import { HowIWork } from '../components/sections/HowIWork';
+import { getCollection, getEntry, render } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(p => ({
+    id: p.id,
+    data: {
+      title: p.data.title,
+      summary: p.data.summary,
+      repo: p.data.repo,
+      showStars: p.data.showStars,
+      technologies: p.data.technologies
+    }
+  }));
+
+const processEntry = await getEntry('sections', '2-how-i-work');
+const processLines = processEntry ? processEntry.body.split('\n').map(l => l.trim()).filter(l => l !== '') : [];
+
+const capabilitiesEntry = await getEntry('sections', '4-capabilities');
+const capabilities = capabilitiesEntry ? capabilitiesEntry.body.split('### ').filter(s => s.trim() !== '').map((section, index) => {
+  const [title, ...descLines] = section.split('\n').map(s => s.trim()).filter(s => s !== '');
+  return {
+    id: `0${index + 1}`,
+    title,
+    desc: descLines.join(' ')
+  };
+}) : [];
+const heroEntry = await getEntry('sections', '1-intro');
+const { Content: HeroContent } = heroEntry ? await render(heroEntry) : { Content: null };
+
+const contactEntry = await getEntry('sections', '5-contact');
+const contactLinks = contactEntry ? [...contactEntry.body.matchAll(/- \[([^\]]+)\]\(([^)]+)\)/g)].map(m => ({ label: m[1], url: m[2] })) : [];
 ---
 
-<Layout title="Naufal Ammar">
-  <AboutSection />
-  <ProjectSection />
-  <SkillSection />
-  <ContactSection />
+<Layout title="Naufal Ammar" description="A curated journey through the work, thinking process, and projects of Naufal Ammar.">
+  <main class="w-full relative overflow-x-hidden selection:bg-zinc-900 selection:text-white bg-[#F4F4F5]">
+    
+    <Hero client:load>
+      {HeroContent && <HeroContent />}
+    </Hero>
+
+    <ZAxisCascade projects={projects} client:load />
+
+    <HowIWork lines={processLines} client:load />
+
+    {/* Capabilities Grid */}
+    <section class="py-32 md:py-48 px-6 md:px-12 max-w-[1400px] mx-auto w-full border-b-2 border-zinc-900">
+      <div class="mb-16 md:mb-24">
+        <p class="text-xs font-mono uppercase tracking-[0.2em] text-zinc-500 mb-4 font-bold">Capabilities</p>
+        <h2 class="text-4xl md:text-6xl tracking-tighter font-black text-zinc-900 max-w-[15ch] leading-[1.1] uppercase">
+          Systems engineering & design.
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-0 border-t-2 border-l-2 border-zinc-900">
+        {capabilities.map((cap, i) => (
+          <div class={`bg-white p-6 md:p-8 lg:p-12 flex flex-col justify-between border-r-2 border-b-2 border-zinc-900 hover:bg-zinc-100 transition-colors ${i === 0 ? 'md:col-span-2 lg:col-span-8' : 'md:col-span-1 lg:col-span-4'}`}>
+            <span class="text-xs font-mono font-bold text-zinc-400 mb-4 md:mb-8">{cap.id}</span>
+            <div>
+              <h3 class="text-xl md:text-2xl lg:text-3xl tracking-tight font-black text-zinc-900 mb-2 md:mb-4 uppercase min-w-0 break-words">{cap.title}</h3>
+              <p class="text-sm md:text-base text-zinc-600 font-medium max-w-[30ch] leading-relaxed">{cap.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* Massive Footer */}
+    <footer class="py-32 md:py-48 px-6 md:px-12 max-w-[1400px] mx-auto w-full relative overflow-hidden bg-[#F4F4F5]">
+      <div class="flex flex-col items-center justify-center text-center relative z-10">
+        <h2 class="text-[15vw] md:text-[12vw] lg:text-[10rem] tracking-tighter font-black text-zinc-900 leading-none mb-16 uppercase">
+          Let's Connect
+        </h2>
+        <div class="flex flex-wrap justify-center gap-4 md:gap-8">
+          {contactLinks.map(link => (
+            <a href={link.url} target={link.url.startsWith('mailto:') ? undefined : "_blank"} rel={link.url.startsWith('mailto:') ? undefined : "noopener noreferrer"} class="px-8 md:px-12 py-4 md:py-5 border-2 border-zinc-900 text-zinc-900 hover:text-white hover:bg-zinc-900 transition-all duration-300 uppercase tracking-[0.2em] text-xs font-black shadow-[4px_4px_0px_0px_rgba(9,9,11,1)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </footer>
+  </main>
 </Layout>

@@ -1,208 +1,26 @@
 ---
-import "../styles/global.css";
-import Navigation from "../components/layout/Navigation.astro";
-import HeroSection from "../components/index/HeroSection.astro";
-import Footer from "../components/layout/Footer.astro";
+import '@fontsource-variable/plus-jakarta-sans';
+import '../styles/global.css';
 
-export interface Props {
-  title?: string;
+interface Props {
+	title: string;
+	description?: string;
 }
 
-const { title = "Naufal Ammar" } = Astro.props;
+const { title, description = "Naufal Ammar" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <script is:inline>
-      (function () {
-        const theme =
-          localStorage.getItem("theme") ||
-          (window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light");
-        document.documentElement.classList.add(theme);
-      })();
-    </script>
-  </head>
-  <body class="!bg-[var(--md-sys-color-surface-container)]">
-    <div class="h-screen flex">
-      <Navigation />
-      <main class="flex-1 min-w-0">
-        <div class="lg:pl-20 pt-20 lg:pt-4 lg:pb-4 lg:pr-4 h-full">
-          <div
-            class="!bg-[var(--md-sys-color-background)] rounded-t-4xl lg:rounded-4xl h-full overflow-y-auto scrollbar-hidden scroll-container"
-          >
-            <HeroSection />
-            <div class="px-4 lg:px-8">
-              <div class="max-w-7xl mx-auto">
-                <slot />
-              </div>
-            </div>
-            <Footer />
-          </div>
-        </div>
-      </main>
-    </div>
-
-    <script>
-      function initTheme() {
-        const html = document.documentElement;
-        const savedTheme = localStorage.getItem("theme");
-        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-          .matches
-          ? "dark"
-          : "light";
-        const theme = savedTheme || systemTheme;
-
-        html.classList.remove("light", "dark");
-        html.classList.add(theme);
-      }
-
-      initTheme();
-
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (e) => {
-          if (!localStorage.getItem("theme")) {
-            const newTheme = e.matches ? "dark" : "light";
-            document.documentElement.classList.remove("light", "dark");
-            document.documentElement.classList.add(newTheme);
-          }
-        });
-    </script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const scrollContainer =
-          document.querySelector<HTMLElement>(".scroll-container");
-        if (!scrollContainer) {
-          console.warn("Scroll container not found!");
-          return;
-        }
-
-        const navLinks = Array.from(
-          document.querySelectorAll<HTMLAnchorElement>(".nav-link")
-        );
-        const sections = Array.from(
-          scrollContainer.querySelectorAll<HTMLElement>("section[id]")
-        );
-
-        function setActiveById(id: string): void {
-          navLinks.forEach((link) => {
-            const href = link.getAttribute("href") ?? "";
-            const isActive = href === `#${id}`;
-
-            const button = link.querySelector<HTMLButtonElement>(".nav-item");
-
-            link.classList.toggle("active", isActive);
-            button?.classList.toggle("active", isActive);
-          });
-        }
-
-        let isClickScrolling = false;
-        let currentActiveId: string | null = null;
-        let observerTimeout: ReturnType<typeof setTimeout> | null = null;
-
-        const debounceSetActive = (id: string) => {
-          if (observerTimeout) clearTimeout(observerTimeout);
-          observerTimeout = setTimeout(() => {
-            if (!isClickScrolling && id !== currentActiveId) {
-              currentActiveId = id;
-              setActiveById(id);
-            }
-          }, 100);
-        };
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            const visibleEntries = entries.filter((e) => e.isIntersecting);
-            if (visibleEntries.length === 0) return;
-
-            const visible = visibleEntries.sort(
-              (a, b) => b.intersectionRatio - a.intersectionRatio
-            )[0];
-            const target = visible.target as HTMLElement;
-            const id = target.id;
-            debounceSetActive(id);
-          },
-          {
-            root: scrollContainer,
-            threshold: Array.from({ length: 11 }, (_, i) => i / 10),
-            rootMargin: "-25% 0px -45% 0px",
-          }
-        );
-
-        sections.forEach((s) => observer.observe(s));
-
-        navLinks.forEach((item) => {
-          item.addEventListener("click", (e: MouseEvent) => {
-            e.preventDefault();
-
-            const targetId = item.getAttribute("href");
-            if (!targetId) return;
-            const target = scrollContainer.querySelector<HTMLElement>(targetId);
-            if (!target) return;
-
-            isClickScrolling = true;
-            currentActiveId = targetId.replace("#", "");
-            setActiveById(currentActiveId);
-
-            const offsetFix = 16;
-            scrollContainer.scrollTo({
-              top: target.offsetTop - offsetFix,
-              behavior: "smooth",
-            });
-
-            setTimeout(() => {
-              isClickScrolling = false;
-            }, 900);
-          });
-        });
-
-        const firstId = sections[0]?.id;
-        if (firstId) {
-          setActiveById(firstId);
-          currentActiveId = firstId;
-        }
-
-        let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
-        scrollContainer.addEventListener("scroll", () => {
-          if (scrollTimeout) clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => {
-            if (isClickScrolling) return;
-
-            const middle =
-              scrollContainer.scrollTop + scrollContainer.clientHeight / 2;
-            let nearest: HTMLElement | undefined;
-            let nearestDist = Infinity;
-
-            for (const sec of sections) {
-              const offset = Math.abs(
-                sec.offsetTop + sec.clientHeight / 2 - middle
-              );
-              if (offset < nearestDist) {
-                nearestDist = offset;
-                nearest = sec;
-              }
-            }
-
-            if (nearest && typeof nearest.id === "string") {
-              setActiveById(nearest.id);
-            }
-          }, 200);
-        });
-      });
-    </script>
-  </body>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="min-h-[100dvh] flex flex-col relative text-zinc-900">
+		<slot />
+	</body>
 </html>

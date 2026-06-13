@@ -1,8 +1,11 @@
 # build output
 dist/
-
 # generated types
 .astro/
+
+.gemini/
+.agents/
+skills-lock.json
 .next/
 .vscode/
 
@@ -15,9 +18,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+
 # environment variables
 .env
 .env.production
+.env.local
 
 # macOS-specific files
 .DS_Store
