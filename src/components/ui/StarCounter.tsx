@@ -18,8 +18,8 @@ export function StarCounter({ repo }: { repo: string }) {
   if (stars === null) return null;
 
   return (
-    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 text-sm font-medium border border-amber-200 dark:border-amber-500/20 w-max">
-      <Star weight="fill" className="w-4 h-4" />
+    <div className="flex items-center gap-1.5 px-3 py-1.5 border-[1.5px] border-zinc-900 bg-zinc-900 text-zinc-100 text-xs font-mono font-bold uppercase tracking-[0.1em] w-max">
+      <Star weight="fill" className="w-3 h-3" />
       <span>{stars}</span>
     </div>
   );

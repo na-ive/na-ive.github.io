@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "@phosphor-icons/react";
+import { StarCounter } from "../ui/StarCounter";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,6 +91,11 @@ export function ZAxisCascade({ projects }: { projects: Project[] }) {
                     </a>
                   )}
                 </div>
+                {project.data.showStars && project.data.repo && (
+                  <div className="mb-4 lg:mb-6">
+                    <StarCounter repo={project.data.repo} />
+                  </div>
+                )}
                 <p className="text-base md:text-lg lg:text-xl text-zinc-600 font-medium leading-relaxed mb-8 lg:mb-12">
                   {project.data.summary}
                 </p>
