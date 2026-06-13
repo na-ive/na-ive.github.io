@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Intro } from '../components/sections/Intro';
 import { Hero } from '../components/sections/Hero';
 import { ZAxisCascade } from '../components/sections/ZAxisCascade';
 import { HowIWork } from '../components/sections/HowIWork';
@@ -40,6 +41,8 @@ const contactLinks = contactEntry ? [...contactEntry.body.matchAll(/- \[([^\]]+)
 <Layout title="Naufal Ammar" description="A curated journey through the work, thinking process, and projects of Naufal Ammar.">
   <main class="w-full relative overflow-x-hidden selection:bg-zinc-900 selection:text-white bg-[#F4F4F5]">
     
+    <Intro client:load />
+
     <Hero client:load>
       {HeroContent && <HeroContent />}
     </Hero>

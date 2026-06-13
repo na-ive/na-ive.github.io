@@ -17,3 +17,9 @@ body {
 @utility brutal-border {
   @apply border-[1.5px] border-zinc-900;
 }
+
+/* Hidden until GSAP animates */
+.hero-line, .hero-sub {
+  opacity: 0;
+}
+

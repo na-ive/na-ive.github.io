@@ -16,18 +16,14 @@ export function Hero({ children }: Props) {
     
     const ctx = gsap.context(() => {
       // Fade up lines
-      gsap.from(".hero-line", {
-        y: 40,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.15,
-        ease: "power4.out",
-        delay: 0.2
-      });
+      gsap.fromTo(".hero-line",
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out", delay: 1.2 }
+      );
       
       gsap.fromTo(".hero-sub", 
       { opacity: 0, x: -20 },
-      { opacity: 1, x: 0, duration: 1, ease: "power3.out", delay: 0.8 }
+      { opacity: 1, x: 0, duration: 1, ease: "power3.out", delay: 1.8 }
     );
     }, container);
 
