@@ -31,7 +31,7 @@ export function Hero({ children }: Props) {
   }, [reduce]);
 
   return (
-    <section ref={container} className="relative min-h-[100dvh] flex flex-col justify-center px-6 md:px-12 max-w-[1400px] mx-auto w-full pt-24 pb-12">
+    <section ref={container} className="relative min-h-[100svh] flex flex-col justify-center px-6 md:px-12 max-w-[1400px] mx-auto w-full pt-24 pb-12">
       <div className="flex flex-col gap-8 md:gap-12 relative z-10">
         {children}
       </div>

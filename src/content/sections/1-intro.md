@@ -12,7 +12,7 @@ order: 1
 
 <h1 class="text-5xl md:text-7xl lg:text-[7rem] tracking-tighter leading-[1.05] font-black text-zinc-900 uppercase overflow-hidden">
   <div class="hero-line block">Most of my</div>
-  <div class="hero-line block text-zinc-400">projects start</div>
+  <div class="hero-line block text-zinc-500">projects start</div>
   <div class="hero-line block">as small ideas.</div>
 </h1>
 

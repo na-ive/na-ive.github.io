@@ -11,6 +11,9 @@ html {
 
 body {
   @apply bg-transparent text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white;
+  /* Prevent iOS elastic overscroll bounce from being interpreted as scroll
+     movement by GSAP ScrollTrigger, which causes animations to jitter idle. */
+  overscroll-behavior: none;
 }
 
 /* Sharp brutalist utilities */

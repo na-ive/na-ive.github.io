@@ -60,14 +60,14 @@ export function ZAxisCascade({ projects }: { projects: Project[] }) {
         <p className="text-xs font-mono uppercase tracking-[0.2em] text-zinc-500 mb-6 font-bold">Selected Work</p>
         <h2 className="text-4xl md:text-6xl tracking-tighter font-black text-zinc-900 max-w-[20ch] leading-[1.1] uppercase">
           SMALL IDEAS TO <br/>
-          <span className="text-zinc-400">COMPLETE SYSTEMS.</span>
+          <span className="text-zinc-500">COMPLETE SYSTEMS.</span>
         </h2>
       </div>
 
       {projects.map((project, i) => (
         <div
           key={project.id}
-          className="stack-card sticky top-0 min-h-[100dvh] w-full flex items-center justify-center px-4 md:px-8 lg:px-12 pb-16 pt-20 lg:pb-24 lg:pt-24 bg-[#F4F4F5]"
+          className="stack-card sticky top-0 min-h-[100svh] w-full flex items-center justify-center px-4 md:px-8 lg:px-12 pb-16 pt-20 lg:pb-24 lg:pt-24 bg-[#F4F4F5]"
         >
           {/* Brutalist Sharp Card */}
           <div className="w-full max-w-[1400px] h-auto min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] bg-white border-[3px] border-zinc-900 shadow-[8px_8px_0px_0px_rgba(9,9,11,1)] overflow-hidden relative flex flex-col lg:flex-row group transition-all duration-300">
