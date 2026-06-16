@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "motion/react";
@@ -22,6 +22,16 @@ interface Project {
 export function ZAxisCascade({ projects }: { projects: Project[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+  const handleImageLoad = useCallback((id: string) => {
+    setLoadedImages(prev => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+  }, []);
 
   useEffect(() => {
     if (reduce || !ref.current) return;
@@ -73,7 +83,7 @@ export function ZAxisCascade({ projects }: { projects: Project[] }) {
           <div className="w-full max-w-[1400px] h-auto min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] bg-white border-[3px] border-zinc-900 shadow-[8px_8px_0px_0px_rgba(9,9,11,1)] overflow-hidden relative flex flex-col lg:flex-row group transition-all duration-300">
             
             {/* Content Side */}
-            <div className="w-full lg:w-[45%] p-6 md:p-10 xl:p-16 flex flex-col justify-center z-10 relative bg-white border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-zinc-900 order-2 lg:order-1">
+            <div className={`w-full lg:w-[45%] p-6 md:p-10 xl:p-16 flex flex-col justify-center z-10 relative bg-white border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-zinc-900 order-2 lg:order-1 transition-opacity duration-700 ${loadedImages.has(project.id) ? "opacity-100" : "opacity-0"}`}>
               <div className="relative z-10 w-full">
                 <div className="flex items-start justify-between gap-4 mb-4 lg:mb-6">
                   <h3 className="text-3xl md:text-5xl lg:text-4xl xl:text-5xl tracking-tighter font-black text-zinc-900 uppercase pr-2 min-w-0 wrap-break-word">
@@ -110,12 +120,17 @@ export function ZAxisCascade({ projects }: { projects: Project[] }) {
             </div>
 
             {/* Image Side */}
-            <div className="relative lg:w-[55%] aspect-video md:aspect-16/7 lg:aspect-auto w-full bg-zinc-100 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 order-1 lg:order-2 border-b-[3px] lg:border-b-0 border-zinc-900 shrink-0 lg:shrink">
+            <div className="relative lg:w-[55%] aspect-video md:aspect-16/7 lg:aspect-auto w-full overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 order-1 lg:order-2 border-b-[3px] lg:border-b-0 border-zinc-900 shrink-0 lg:shrink">
+              {!loadedImages.has(project.id) && (
+                <div className="absolute inset-0 skeleton z-10" />
+              )}
               <img 
                 src={`/images/${project.id}.png`} 
                 alt={project.data.title}
                 loading={i === 0 ? "eager" : "lazy"}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                onLoad={() => handleImageLoad(project.id)}
+                onError={() => handleImageLoad(project.id)}
+                className={`absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ${loadedImages.has(project.id) ? "opacity-100" : "opacity-0"}`}
               />
             </div>
 
