@@ -130,6 +130,7 @@ export function ZAxisCascade({ projects }: { projects: Project[] }) {
                 loading={i === 0 ? "eager" : "lazy"}
                 onLoad={() => handleImageLoad(project.id)}
                 onError={() => handleImageLoad(project.id)}
+                ref={el => { if (el?.complete) handleImageLoad(project.id); }}
                 className={`absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ${loadedImages.has(project.id) ? "opacity-100" : "opacity-0"}`}
               />
             </div>
