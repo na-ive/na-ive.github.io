@@ -89,7 +89,7 @@ export function Intro() {
       <div className="intro-line w-24 md:w-32 h-[2px] bg-zinc-900 mt-6 md:mt-8 origin-left" />
 
       <p className="intro-sub text-xs font-mono uppercase tracking-[0.2em] text-zinc-400 font-bold mt-6">
-        Software Engineer
+        Web Developer
       </p>
     </div>
   );
